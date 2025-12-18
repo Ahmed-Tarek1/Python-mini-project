@@ -21,6 +21,7 @@ def read_csv_file(file_path, dtypes:dict):
         for row in reader:
             for column in dtypes:
                 value = row[column]
+                value = value.strip()
 
                 if value == "":
                     data[column].append(None)
