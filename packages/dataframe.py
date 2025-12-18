@@ -1,5 +1,7 @@
 from .file_handler import *
 from .stats import *
+from typing import Callable
+
 class Dataframe:
     def __init__(self, data: dict, dtype: dict):
         self.data = data     
@@ -10,7 +12,7 @@ class Dataframe:
     def read_csv(cls, data_path, dtype_path):
         dtype = read_dtype(dtype_path)
         data = read_csv_file(data_path, dtype)
-        return  Dataframe(data, dtype)
+        return  cls(data, dtype)
     
     #TODO: define count_nulls()
     def count_nulls(self):
@@ -51,15 +53,18 @@ class Dataframe:
         return
     
     #TODO: define fillna()   
-    def fillna(self, num_strategy: str, cat_strategy: str):
-        for name, values in self.data.items():
-            
-            for i, val in enumerate(values):
-                if val is None and isinstance(val, (int, float)):
-                    values[i] = num_strategy(name)
-                elif val is None:
-                    values[i] = cat_strategy(name)
+    def fillna(self, num_strategy: Callable, cat_strategy: Callable):
+        for col_name, values in self.data.items():
 
+            if (self.dtype[col_name] in ('int', 'float')):
+                fill_val = num_strategy(values)
+            else:
+                fill_val = cat_strategy(values)
+
+            for i, val in enumerate(values):
+                if val is None:
+                    values[i] = fill_val
+                    
         return
 
     #TODO: define to_csv()
