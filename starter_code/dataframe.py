@@ -53,11 +53,13 @@ class Dataframe:
     #TODO: define fillna()   
     def fillna(self, num_strategy: str, cat_strategy: str):
         for name, values in self.data.items():
-            for val in values:
+            
+            for i, val in enumerate(values):
                 if val is None and isinstance(val, (int, float)):
-                    val = num_strategy(name)
-                elif val is None and not isinstance(val, (int, float)):
-                    val = cat_strategy(name)
+                    values[i] = num_strategy(name)
+                elif val is None:
+                    values[i] = cat_strategy(name)
+
         return
 
     #TODO: define to_csv()

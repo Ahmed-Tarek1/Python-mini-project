@@ -25,6 +25,8 @@ def get_col_max(col:list):
 
     # Use reduce to compute maximum
     return reduce(lambda a, b: a if a > b else b, filtered_col)
+    #return reduce(lambda a, b: a if a > b else b, (x for x in col if x is not None)) if is_numeric_col(col) and any(x is not None for x in col) else None
+
 
 def get_col_min(col:list):
     """
@@ -45,6 +47,8 @@ def get_col_min(col:list):
         return None
     
     return reduce(lambda a, b: a if a < b else b, filtered_col)
+    #return reduce(lambda a, b: a if a < b else b, (x for x in col if x is not None)) if is_numeric_col(col) and any(x is not None for x in col) else None
+
 
 def get_col_mean(col:list):
     """
