@@ -1,5 +1,5 @@
-from file_handler import *
-from stats import *
+from .file_handler import *
+from .stats import *
 class Dataframe:
     def __init__(self, data: dict, dtype: dict):
         self.data = data     
@@ -26,7 +26,7 @@ class Dataframe:
         return res
     
     #TODO: define describe()
-    def describe(self, path: str = "starter_code/data/describe.csv"):
+    def describe(self, path: str = "data/describe.csv"):
         stats_rows = {
         "column": [],
         "nulls": [],
@@ -63,6 +63,6 @@ class Dataframe:
         return
 
     #TODO: define to_csv()
-    def to_csv(self, path: str = "starter_code/data/out.csv"):
+    def to_csv(self, path: str = "data/out.csv"):
         write_file(path, self.data)
         return
