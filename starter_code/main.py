@@ -1,4 +1,4 @@
-from packages.dataframe import *
+from dataframe import *
 def main():
     # TODO: Read data
     ob = Dataframe()
