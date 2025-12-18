@@ -1,3 +1,4 @@
+import csv
 def read_csv_file(file_path, dtypes:dict):
     """
     Read a CSV file and convert each column to the specified data type.
@@ -11,7 +12,32 @@ def read_csv_file(file_path, dtypes:dict):
               Missing values (empty strings) are replaced with None.
     
     """
-    pass
+    data = {}
+    with open(file_path, newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for column in dtypes:
+            data[column] = []
+
+        for row in reader:
+            for column in dtypes:
+                value = row[column]
+
+                if value == "":
+                    data[column].append(None)
+                else:
+                    # convert the value based on dtypes[column]
+                    if dtypes[column] == "int":
+                        data[column].append(int(value))
+                    elif dtypes[column] == "float":
+                        data[column].append(float(value))
+                    else:  # assume string
+                        data[column].append(value)
+
+    return data
+
+                    
+
+    
 
 def read_dtype(file_path):
     """
@@ -23,8 +49,17 @@ def read_dtype(file_path):
     Returns:
         dict: A dictionary where keys are column names and values are data types ('int', 'float', 'string').
     """
-    pass
-            
+    dtype_dict = {}
+    with open(file_path, newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+
+        for row in reader:
+            column_name = row['column'].strip()
+            dtype = row['dtype'].strip().lower()
+            dtype_dict[column_name] = dtype
+
+    return dtype_dict
+
 def write_file(file_path, data:dict):
     """
     Write a data dictionary to a CSV file.
@@ -36,4 +71,24 @@ def write_file(file_path, data:dict):
     Returns:
         None
     """
-    pass
+    columns = list(data.keys())
+
+    if not columns:
+        return  # empty data
+
+    num_rows = len(data[columns[0]])
+
+    with open(file_path, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow(columns)
+
+        for i in range(num_rows):
+            row = []
+            for col in columns:
+                value = data[col][i]
+                if value is None:
+                    value = ""  # convert None to empty string
+                row.append(value)
+            writer.writerow(row)
+
+    return
