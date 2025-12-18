@@ -1,8 +1,8 @@
-from dataframe import *
+from packages import *
+
 def main():
     # TODO: Read data
-    ob = Dataframe()
-    df = ob.read_csv("/Users/ahmedtarek/Downloads/ITI/Python for ML/Mini Project/starter_code/data/titanic.csv", "/Users/ahmedtarek/Downloads/ITI/Python for ML/Mini Project/starter_code/data/titanic_dtype.csv")
+    df = Dataframe.read_csv("/Users/ahmedtarek/Downloads/ITI/Python for ML/Mini Project/starter_code/data/titanic.csv", "/Users/ahmedtarek/Downloads/ITI/Python for ML/Mini Project/starter_code/data/titanic_dtype.csv")
 
     # TODO: Fill missing values
     # Numeric columns → mean
